@@ -1,10 +1,11 @@
 import java.util.*;
 
 public class Laberinto {
-	private static final char SALIDA = 's';
-	private static final char FIN = 'f';
+	private static final char SALIDA = 'S';
+	private static final char FIN = 'F';
 	private static final char OBSTACULO = '#';
-	private static final char LIBRE = 'l';
+	private static final char LIBRE = ' ';
+	private static final char VISITADO = '+';
 
 	private int dimensionX, dimensionY;
 	private char[][] matriz;
@@ -53,6 +54,7 @@ public class Laberinto {
 
     public void setProbabilidad (int newProb) {
         prob = newProb;
+		//actualizarTablero();
     }
 
     public int getProbabilidad () {
@@ -70,6 +72,6 @@ public class Laberinto {
 		return res.toString();
 	}
 
-    publi
+    public pintarSolucion
 
 }
