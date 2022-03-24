@@ -1,20 +1,69 @@
-import java.util.Random;
+import java.util.*;
 
 public class Laberinto {
-	private int x, y;
-	private char [][] matriz;
+	private static final char SALIDA = 's';
+	private static final char FIN = 'f';
+	private static final char OBSTACULO = 'o';
+	private static final char LIBRE = 'l';
+
+	private int dimensionX, dimensionY;
+	private char[][] matriz;
 	private int prob;
 	private int iniX, iniY, finX, finY;
+	private long seed;
 	
 	public Laberinto (int x, int y) {
-		this.x = x;
-		this.y = y;
+		this.dimensionX = x;
+		this.dimensionY = y;
 	}
 	
 	public void generarLaberinto () {
-		Random inicioX = new Random(x-1);
-        Random inicioY = new Random(y-1);
+		Random pos = new Random(seed); 
+        int tamTotal = dimensionX * dimensionY;
+        int numObstculos = tamTotal * (prob/100);
+        int obsX, obsY;
+
+        iniX = pos.nextInt(dimensionX-1);
+        iniY = pos.nextInt(dimensionY-1);
+        finX = pos.nextInt(dimensionX-1);
+        finY = pos.nextInt(dimensionY-1);
+
+        while (iniX == finX && iniY == finY) {
+            finX = pos.nextInt(dimensionX-1);
+            finY = pos.nextInt(dimensionY-1);
+        }
         
+        for (int i = 0; i < numObstculos; i++) {
+            do {
+                obsX = pos.nextInt(dimensionX-1);
+                obsY = pos.nextInt(dimensionY-1);
+            } while (!estLibre(obsX, obsY));
+            matriz[obsX][obsY] = OBSTACULO;
+        }
+	}
+    
+    
+    private boolean estLibre (int x, int y) {
+        if(matriz[x][y] == LIBRE) {
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public setProbabilidad (int) {
+
+    }
+
+
+	@Override 
+	public String toString(){
+		StringJoiner res = new StringJoiner("\n");
+		for (int i = 0; i < dimensionX; i++) {
+			res.add(Arrays.toString(matriz[i]));
+		}
+
+		return res.toString();
 	}
 
 }
