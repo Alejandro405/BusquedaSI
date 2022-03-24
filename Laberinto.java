@@ -1,3 +1,5 @@
+import java.util.Random;
+
 public class Laberinto {
 	private int x, y;
 	private char [][] matriz;
@@ -10,7 +12,9 @@ public class Laberinto {
 	}
 	
 	public void generarLaberinto () {
-		
+		Random inicioX = new Random(x-1);
+        Random inicioY = new Random(y-1);
+        
 	}
 
 }
