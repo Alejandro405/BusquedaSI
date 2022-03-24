@@ -66,12 +66,14 @@ public class Laberinto {
 	public String toString(){
 		StringJoiner res = new StringJoiner("\n");
 		for (int i = 0; i < dimensionX; i++) {
-			res.add(Arrays.toString(matriz[i]));
+            String linea = "";
+            for (int j = 0; j < dimensionY; j++) {
+                linea += matriz[i][j];
+            }
+			res.add(linea);
 		}
 
 		return res.toString();
 	}
-
-    public pintarSolucion
 
 }
