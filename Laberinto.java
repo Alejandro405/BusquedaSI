@@ -3,7 +3,7 @@ import java.util.*;
 public class Laberinto {
 	private static final char SALIDA = 's';
 	private static final char FIN = 'f';
-	private static final char OBSTACULO = 'o';
+	private static final char OBSTACULO = '#';
 	private static final char LIBRE = 'l';
 
 	private int dimensionX, dimensionY;
@@ -51,8 +51,12 @@ public class Laberinto {
         }
     }
 
-    public setProbabilidad (int) {
+    public void setProbabilidad (int newProb) {
+        prob = newProb;
+    }
 
+    public int getProbabilidad () {
+        return prob;
     }
 
 
@@ -65,5 +69,7 @@ public class Laberinto {
 
 		return res.toString();
 	}
+
+    publi
 
 }
