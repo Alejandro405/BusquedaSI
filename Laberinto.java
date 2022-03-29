@@ -61,6 +61,12 @@ public class Laberinto {
         return prob;
     }
 
+    public boolean esObjetivo(Nodo node) {
+        
+
+        return false;
+    }
+
 
 	@Override 
 	public String toString(){
