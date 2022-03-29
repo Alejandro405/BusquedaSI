@@ -76,18 +76,18 @@ public class Laberinto {
         return prob;
     }
 
-<<<<<<< Updated upstream
+
     public boolean esObjetivo(Nodo node) {
         
-
         return false;
-=======
+    }
+
     public void pintarSolucion (ArrayList<Nodo> solucion) {
         for (int i = 0; i < solucion.size(); i++) {
             Nodo n = solucion.get(i);
             matriz[n.getX()][n.getY()] = VISITADO;
         }
->>>>>>> Stashed changes
+
     }
 
 
