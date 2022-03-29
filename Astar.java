@@ -35,25 +35,27 @@ public class Astar{
         ArrayList<Nodo> sol = new ArrayList<>();  
 
         Abiertos.add(new Nodo(this.problema.getInicX(), problema.getInicY(), null, 0, 0));
-        System.out.println("Abiertos: " + Abiertos);
+        //System.out.println("Abiertos: " + Abiertos);
 
         while (!Abiertos.isEmpty() && !encontradaSolucion){
 
             Nodo n = Abiertos.pollFirst();
             Abiertos.remove(n);
             Cerrados.add(n);
-            System.out.println("Abiertos: " + Abiertos);
+            problema.marcarCerrado(n.getX(), n.getY());
+            //System.out.println("Abiertos: " + Abiertos);
 
             if (!problema.esObjetivo(n)) {
                 sucesores(n);
-                System.out.println("Cerrados: " + Cerrados);
+                //System.out.println("Cerrados: " + Cerrados);
             } else {
                 encontradaSolucion = true;
                 sol = reconstruirSolucion(n);
             }
-
+            System.out.println("-------------------------------------");
+            problema.mostrarLaberinto();
         }
-        
+
         return sol;
     }
 
@@ -78,45 +80,49 @@ public class Astar{
         int posY = actual.getY();
         Nodo nuevo;
 
-        if(posX+1 < problema.getDimX() && problema.estaLibre(posX+1, posY)) { //Derecha
+        if(posX + 1 < problema.getDimX() && problema.estaLibre(posX+1, posY)) { //Derecha
             
-            nuevo = new Nodo(posX+1, posY, actual, actual.getCoste() + 1, h(posX + 1, posY));
+            nuevo = new Nodo(posX + 1, posY, actual, actual.getCoste() + 1, h(posX + 1, posY));
 
             if (!Cerrados.contains(nuevo)) { //Comprueba que el nodo nuevo no se ha explorado antes
                 Abiertos.add(nuevo); //Si el nodo nuevo ya esta en la lista de abiertos, no se añadirá ya que el que esta dentro de la lista de abiertos debería ser mejor
+                problema.marcarAbierto(posX + 1, posY);
             }
 
         }
 
         if(posX-1 >= 0 && problema.estaLibre(posX-1, posY)) { //Izquierda
             
-            nuevo = new Nodo(posX-1, posY, actual, actual.getCoste() + 1, h(posX - 1, posY));
+            nuevo = new Nodo(posX - 1, posY, actual, actual.getCoste() + 1, h(posX - 1, posY));
 
             if (!Cerrados.contains(nuevo)) {
                 Abiertos.add(nuevo);
+                problema.marcarAbierto(posX - 1, posY);
             }
 
         } 
 
-        if(posY+1 < problema.getDimY() && problema.estaLibre(posX, posY+1)) { //Abajo
+        if(posY + 1 < problema.getDimY() && problema.estaLibre(posX, posY + 1)) { //Abajo
             
-            nuevo = new Nodo(posX, posY+1, actual, actual.getCoste() + 1, h(posX, posY+1));
+            nuevo = new Nodo(posX, posY + 1, actual, actual.getCoste() + 1, h(posX, posY + 1));
 
             if (!Cerrados.contains(nuevo)) {
                 Abiertos.add(nuevo);
+                problema.marcarAbierto(posX, posY + 1);
             }
 
         }
 
-        if(posY-1 >= 0 && problema.estaLibre(posX, posY-1)) { //Arriba
+        if(posY - 1 >= 0 && problema.estaLibre(posX, posY - 1)) { //Arriba
             
-            nuevo = new Nodo(posX, posY-1, actual, actual.getCoste() + 1, h(posX, posY-1));
+            nuevo = new Nodo(posX, posY - 1, actual, actual.getCoste() + 1, h(posX, posY - 1));
 
             if (!Cerrados.contains(nuevo)) {
                 Abiertos.add(nuevo);
+                problema.marcarAbierto(posX, posY - 1);
             }
 
         }
-        System.out.println("Abiertos: " + Abiertos);
+        //System.out.println("Abiertos: " + Abiertos);
     }
 }

@@ -6,6 +6,8 @@ public class Laberinto {
     private static final char OBSTACULO = '*';
     private static final char LIBRE = ' ';
     private static final char VISITADO = '+';
+    private static final char ABIERTO = 'A';
+    private static final char CERRADO = 'C';
 
     private int dimensionX, dimensionY;
     private char[][] matriz;
@@ -23,7 +25,7 @@ public class Laberinto {
             for (int j = 0; j < dimensionY; j++) {
                 matriz[i][j] = LIBRE;
             }
-            
+
         }
     }
 
@@ -86,9 +88,21 @@ public class Laberinto {
         }
     }
 
+    public void marcarAbierto(int x, int y) {
+        if(estaLibre(x, y)) {
+            matriz[x][y] = ABIERTO;
+        }
+    }
+
+    public void marcarCerrado(int x, int y) {
+        if (matriz[x][y] == ABIERTO) {
+            matriz[x][y] = CERRADO;
+        }
+    }
+
     public boolean estaLibre(int x, int y) {
 
-        if (matriz[x][y] == LIBRE) {
+        if (matriz[x][y] == LIBRE || matriz[x][y] == FIN) {
             return true;
         } else {
             return false;

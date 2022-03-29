@@ -8,7 +8,7 @@ public class Main {
         prueba.generarLaberinto();
         prueba.mostrarLaberinto();
 
-        System.out.println("Resultado-------------------------------------");
+        System.out.println("-------------------------------------");
         Astar h0 = new Astar(prueba, 1);
         //Astar distManh = new Astar(prueba, 2);
         //Astar distEu = new Astar(prueba, 3);
@@ -18,8 +18,9 @@ public class Main {
         trampa.add(new Nodo(0, 3, null, 0, 0));
         trampa.add(new Nodo(0, 2, null, 0, 0));
         prueba.pintarSolucion(h0.resolver());
+        System.out.println(h0.resolver());
+        System.out.println("-------------------------------------");
         prueba.mostrarLaberinto();
-        h0.sucesores(new Nodo(2, 3, null, 0, 0));
 
     }
 } 
