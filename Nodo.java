@@ -7,11 +7,12 @@ public class Nodo implements Comparable<Nodo>{
 
     private Nodo padre;
 
-    public Nodo (int X, int Y, Nodo padre, int g, double h){
+    public Nodo (int X, int Y, Nodo p, int g, double h){
         corX = X;
         corY = Y;
         coste = g;
         estimacion = h;
+        padre = p;
     }
 
     public int getX () {
@@ -41,17 +42,17 @@ public class Nodo implements Comparable<Nodo>{
     
 	@Override
 	public int compareTo(Nodo o) {
-        if (o.getX() == corX && o.getY() == corY) {
-            return 0;
+        if (o.getX() != corX || o.getY() != corY) {
+            return (int)((coste + estimacion) - (o.getCoste() + o.getEstimacion()));
         }else{
-            return -1;
+            return 0;
         }
 		//return (int)((coste + estimacion) - (o.getCoste() + o.getEstimacion()));
 	}
 
     @Override
     public String toString () {
-        return "x: " + corX + " /y: " + corY ;
+        return "x: " + corX + " /y: " + corY + "P: " + padre;
         //+ " /Coste: " + coste + " /Estimacion: " + estimacion;
     }
 }

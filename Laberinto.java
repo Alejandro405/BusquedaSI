@@ -128,12 +128,12 @@ public class Laberinto {
         for (int i = 0; i < solucion.size(); i++) {
 
             Nodo n = solucion.get(i);
-
-            if (estaLibre(n.getX(), n.getY())) {
-                matriz[n.getX()][n.getY()] = VISITADO;
-            }
-
+            matriz[n.getX()][n.getY()] = VISITADO;
+            
         }
+
+        System.out.println("-------------------------------------");
+        mostrarLaberinto();
 
     }
 

@@ -35,7 +35,6 @@ public class Astar{
         ArrayList<Nodo> sol = new ArrayList<>();  
 
         Abiertos.add(new Nodo(this.problema.getInicX(), problema.getInicY(), null, 0, 0));
-        //System.out.println("Abiertos: " + Abiertos);
 
         while (!Abiertos.isEmpty() && !encontradaSolucion){
 
@@ -43,14 +42,13 @@ public class Astar{
             Abiertos.remove(n);
             Cerrados.add(n);
             problema.marcarCerrado(n.getX(), n.getY());
-            //System.out.println("Abiertos: " + Abiertos);
 
             if (!problema.esObjetivo(n)) {
                 sucesores(n);
-                //System.out.println("Cerrados: " + Cerrados);
             } else {
                 encontradaSolucion = true;
                 sol = reconstruirSolucion(n);
+                System.out.println(n);
             }
             System.out.println("-------------------------------------");
             problema.mostrarLaberinto();
@@ -123,6 +121,6 @@ public class Astar{
             }
 
         }
-        //System.out.println("Abiertos: " + Abiertos);
+    
     }
 }
