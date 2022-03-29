@@ -1,24 +1,19 @@
-<<<<<<< Updated upstream
-public class Nodo implements Comparable<Nodo> {
+public class Nodo implements Comparable<Nodo>{
 
     private int corX;
     private int corY;
-
-=======
-public class Nodo implements <Comparable>{
-
-    private int corX;
-    private int corY;
->>>>>>> Stashed changes
     private int g;
-    private int h;
+    private double h;
     private int f;
 
     private Nodo padre;
 
-    public Nodo (int cordX, int cordY, Nodo padre){
+    public Nodo (int cordX, int cordY, Nodo padre, int coste, double estimacion){
         this.corX=cordX;
         this.corY=cordY;
+
+        h = estimacion;
+        g = coste;
     }
 
     public int getX () {
@@ -29,9 +24,18 @@ public class Nodo implements <Comparable>{
         return corY;
     }
 
-    @Override
-    public int compareTo(Nodo o) {
-        // TODO Auto-generated method stub
-        return 0;
+    public int getCoste () {
+        return g;
     }
+
+    
+    public boolean equals(Nodo o){
+        return o.corX == this.corX && o.corY == this.corY;
+            
+    }
+	@Override
+	public int compareTo(Nodo o) {
+		// TODO Auto-generated method stub
+		return this.f - o.f;
+	}
 }

@@ -1,9 +1,9 @@
 import java.util.*;
 
 public class Laberinto {
-	private static final char SALIDA = 'S';
-	private static final char FIN = 'F';
-	private static final char OBSTACULO = '#';
+	private static final char SALIDA = 'I';
+	private static final char FIN = 'G';
+	private static final char OBSTACULO = '*';
 	private static final char LIBRE = ' ';
 	private static final char VISITADO = '+';
 
@@ -47,13 +47,13 @@ public class Laberinto {
             do {
                 obsX = pos.nextInt(dimensionX-1);
                 obsY = pos.nextInt(dimensionY-1);
-            } while (!estLibre(obsX, obsY));
+            } while (!estaLibre(obsX, obsY));
             matriz[obsX][obsY] = OBSTACULO;
         }
 	}
     
     
-    private boolean estLibre (int x, int y) {
+    public boolean estaLibre (int x, int y) {
         if(matriz[x][y] == LIBRE) {
             return true;
         }else{
@@ -61,9 +61,9 @@ public class Laberinto {
         }
     }
 
-    public void setProbabilidad (int newProb) {
+    public void actualizarObstaculo (int newProb) {
         prob = newProb;
-		//actualizarTablero();
+		this.generarLaberinto();
     }
 
     public void mostrarLaberinto () {
@@ -79,7 +79,31 @@ public class Laberinto {
 
     public boolean esObjetivo(Nodo node) {
         
-        return false;
+        return node.getX() == finX && node.getY() == finY;
+    }
+
+    public int getDimX () {
+        return dimensionX;
+    }
+
+    public int getDimY () {
+        return dimensionY;
+    }
+
+    public int getInicX(){
+        return this.iniX;
+    }
+
+    public int getInicY(){
+        return this.iniY;
+    }
+
+    public int getFinX(){
+        return finX;
+    }
+
+    public int getFinY(){
+        return finY;
     }
 
     public void pintarSolucion (ArrayList<Nodo> solucion) {
