@@ -2,18 +2,16 @@ public class Nodo implements Comparable<Nodo>{
 
     private int corX;
     private int corY;
-    private int g;
-    private double h;
-    private int f;
+    private int coste;
+    private double estimacion;
 
     private Nodo padre;
 
-    public Nodo (int cordX, int cordY, Nodo padre, int coste, double estimacion){
-        this.corX=cordX;
-        this.corY=cordY;
-
-        h = estimacion;
-        g = coste;
+    public Nodo (int X, int Y, Nodo padre, int g, double h){
+        corX = X;
+        corY = Y;
+        coste = g;
+        estimacion = h;
     }
 
     public int getX () {
@@ -25,17 +23,35 @@ public class Nodo implements Comparable<Nodo>{
     }
 
     public int getCoste () {
-        return g;
+        return coste;
     }
 
+    public Nodo getPadre () {
+        return padre;
+    }
+
+    public double getEstimacion(){
+        return estimacion;
+    }
     
     public boolean equals(Nodo o){
-        return o.corX == this.corX && o.corY == this.corY;
+        return (o.getX() == corX && o.getY() == corY);
             
     }
+    
 	@Override
 	public int compareTo(Nodo o) {
-		// TODO Auto-generated method stub
-		return this.f - o.f;
+        if (o.getX() == corX && o.getY() == corY) {
+            return 0;
+        }else{
+            return -1;
+        }
+		//return (int)((coste + estimacion) - (o.getCoste() + o.getEstimacion()));
 	}
+
+    @Override
+    public String toString () {
+        return "x: " + corX + " /y: " + corY ;
+        //+ " /Coste: " + coste + " /Estimacion: " + estimacion;
+    }
 }

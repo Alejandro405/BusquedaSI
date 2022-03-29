@@ -1,5 +1,4 @@
 import java.util.*;
-import java.lang.*;
 
 public class Astar{
     
@@ -12,8 +11,8 @@ public class Astar{
     public Astar(Laberinto laberinto, int tipoHeuristico){
         problema = laberinto;
         heuristico = tipoHeuristico;
-        Abiertos = new TreeSet();
-        Cerrados = new TreeSet();
+        Abiertos = new TreeSet<Nodo>();
+        Cerrados = new TreeSet<Nodo>();
     }
 
     public double h(int x, int y){// 1 -> h = 0 |  2 -> h = distManhatan | 3 -> h = distEuclidç
@@ -30,54 +29,94 @@ public class Astar{
     }
 
     public ArrayList<Nodo> resolver(){
-        boolean encontradaSolucion = false;
         Abiertos.clear();
         Cerrados.clear();
+        boolean encontradaSolucion = false;
         ArrayList<Nodo> sol = new ArrayList<>();  
 
         Abiertos.add(new Nodo(this.problema.getInicX(), problema.getInicY(), null, 0, 0));
-        while (Abiertos.isEmpty() && !encontradaSolucion){
+        System.out.println("Abiertos: " + Abiertos);
+
+        while (!Abiertos.isEmpty() && !encontradaSolucion){
+
             Nodo n = Abiertos.pollFirst();
+            Abiertos.remove(n);
             Cerrados.add(n);
-            if (!problema.esObjetivo(n)){
-                Set<Nodo> m = sucesores(n);
-                for (Nodo x : m){
-                    if (!Abiertos.contains(x) && !Cerrados.contains(x)){
-                        Abiertos.add(x);
-                    }
-                }
+            System.out.println("Abiertos: " + Abiertos);
+
+            if (!problema.esObjetivo(n)) {
+                sucesores(n);
+                System.out.println("Cerrados: " + Cerrados);
             } else {
                 encontradaSolucion = true;
-                sol = reconstruirSolucion();
+                sol = reconstruirSolucion(n);
             }
+
+        }
+        
+        return sol;
+    }
+
+    private ArrayList<Nodo> reconstruirSolucion(Nodo n) {
+
+        ArrayList<Nodo> sol = new ArrayList<>();
+        Nodo sig = n;
+
+        while (sig != null) {
+            sol.add(sig);
+            sig = sig.getPadre();
         }
 
         return sol;
     }
 
-    private ArrayList<Nodo> reconstruirSolucion() {
-        return null;
-    }
 
 
+    public void sucesores (Nodo actual) {
 
-    public Set<Nodo> sucesores (Nodo actual) {
-        Set<Nodo> m = null;
         int posX = actual.getX();
         int posY = actual.getY();
         Nodo nuevo;
 
-        if(posX+1 < problema.getDimX() && problema.estaLibre(posX+1, posY)) { //Arriba
-            Abiertos.add(new Nodo(posX+1, posY, actual, actual.getCoste() + 1, h(posX + 1, posY)));
-        }else if(posX-1 < problema.getDimX() && problema.estaLibre(posX-1, posY)) { //Abajo
-            Abiertos.add(new Nodo(posX-1, posY, actual, actual.getCoste() + 1, h(posX - 1, posY)));
-        }else if(posY+1 < problema.getDimY() && problema.estaLibre(posX, posY+1)) { //Derecha
-            Abiertos.add(new Nodo(posX, posY+1, actual, actual.getCoste() + 1, h(posX, posY+1)));
-        }else if(posY-1 < problema.getDimX() && problema.estaLibre(posX, posY-1)) { //Izquierda
-            Abiertos.add(new Nodo(posX, posY-1, actual, actual.getCoste() + 1, h(posX, posY-1)));
+        if(posX+1 < problema.getDimX() && problema.estaLibre(posX+1, posY)) { //Derecha
+            
+            nuevo = new Nodo(posX+1, posY, actual, actual.getCoste() + 1, h(posX + 1, posY));
+
+            if (!Cerrados.contains(nuevo)) { //Comprueba que el nodo nuevo no se ha explorado antes
+                Abiertos.add(nuevo); //Si el nodo nuevo ya esta en la lista de abiertos, no se añadirá ya que el que esta dentro de la lista de abiertos debería ser mejor
+            }
+
         }
 
-        return m;
+        if(posX-1 >= 0 && problema.estaLibre(posX-1, posY)) { //Izquierda
+            
+            nuevo = new Nodo(posX-1, posY, actual, actual.getCoste() + 1, h(posX - 1, posY));
 
+            if (!Cerrados.contains(nuevo)) {
+                Abiertos.add(nuevo);
+            }
+
+        } 
+
+        if(posY+1 < problema.getDimY() && problema.estaLibre(posX, posY+1)) { //Abajo
+            
+            nuevo = new Nodo(posX, posY+1, actual, actual.getCoste() + 1, h(posX, posY+1));
+
+            if (!Cerrados.contains(nuevo)) {
+                Abiertos.add(nuevo);
+            }
+
+        }
+
+        if(posY-1 >= 0 && problema.estaLibre(posX, posY-1)) { //Arriba
+            
+            nuevo = new Nodo(posX, posY-1, actual, actual.getCoste() + 1, h(posX, posY-1));
+
+            if (!Cerrados.contains(nuevo)) {
+                Abiertos.add(nuevo);
+            }
+
+        }
+        System.out.println("Abiertos: " + Abiertos);
     }
 }
