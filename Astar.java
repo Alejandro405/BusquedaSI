@@ -21,9 +21,9 @@ public class Astar{
         int finY = problema.getFinY();
         double res = 0;
         if (heuristico == 2){
-            res = Math.abs(finX - x) - Math.abs(finY - y); 
+            res = Math.abs(finX - x) + Math.abs(finY - y); 
         } else if (heuristico == 3){
-            res = Math.sqrt(((finX - x)^2) - ((finY - y)^2));
+            res = Math.sqrt(((finX - x)^2) + ((finY - y)^2));
         }
 
         return res;
