@@ -7,6 +7,12 @@ public class Nodo implements Comparable<Nodo>{
 
     private Nodo padre;
 
+    public Nodo(int x, int y, Nodo p){
+        corX = x;
+        corY = y;
+        padre = p;
+    }
+
     public Nodo (int X, int Y, Nodo p, int g, double h){
         corX = X;
         corY = Y;
@@ -34,10 +40,28 @@ public class Nodo implements Comparable<Nodo>{
     public double getEstimacion(){
         return estimacion;
     }
+
+    public boolean formaCiclo(){
+        boolean nodoEncontrado = false;
+        Nodo next = padre;
+        while (!nodoEncontrado && next.padre != null){
+            if (this.equals(next)) {
+                nodoEncontrado = true;
+            } else {
+                next = next.padre;
+            }
+        }
+        return nodoEncontrado;
+    }
     
-    public boolean equals(Nodo o){
-        return (o.getX() == corX && o.getY() == corY);
-            
+    @Override
+    public boolean equals(Object o){
+        boolean res = false;
+        if (o instanceof Nodo){
+            res = (((Nodo) o).getX() == corX && ((Nodo) o).getY() == corY);
+        }
+        
+        return res;  
     }
     
 	@Override

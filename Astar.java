@@ -2,6 +2,7 @@ import java.util.*;
 
 public class Astar{
     
+    private static final int NUM_VECINOS = 4;
     //Los heurísticos son monótonos, no hay redir de punteros
     private Laberinto problema;
     private int heuristico;// 1 -> h = 0 |  2 -> h = distManhatan | 3 -> h = distEuclidç
@@ -39,7 +40,7 @@ public class Astar{
         while (!Abiertos.isEmpty() && !encontradaSolucion){
 
             Nodo n = Abiertos.pollFirst();
-            Abiertos.remove(n);
+           // Abiertos.remove(n);
             Cerrados.add(n);
             problema.marcarCerrado(n.getX(), n.getY());
 
@@ -70,9 +71,13 @@ public class Astar{
         return sol;
     }
 
+    private boolean formaCiclos(Nodo n) {
 
+        return false ;
+    }
 
-    public void sucesores (Nodo actual) {
+    private void sucesores (Nodo actual) {
+
 
         int posX = actual.getX();
         int posY = actual.getY();
@@ -122,5 +127,40 @@ public class Astar{
 
         }
     
+    }
+
+    private Set<Nodo> calcSucesores(Nodo n) {
+        Set<Nodo> result = new HashSet<>();
+        for (int i = 0; i < NUM_VECINOS; i++) {
+            int n_y = n.getY();
+            int n_x = n.getX();
+            switch(i){
+                case 0: //Arriba
+                    Nodo nodoSup = new Nodo(n_x, n_y, n.getPadre());
+                    if (problema.enLaberinto(n_x, n_y - 1) && !this.problema.hayObstaculos(n_x, n_y - 1) && !nodoSup.formaCiclo()){
+                        result.add(new Nodo(n_x, n_y - 1, n, n.getCoste(), h(n_x, n_y - 1)));
+                    }
+                    break;
+                case 1: //Abajo 
+                    Nodo nodoInf = new Nodo(n_x, n_y, n.getPadre());
+                    if (problema.enLaberinto(n_x, n_y + 1) && !this.problema.hayObstaculos(n_x, n_y + 1) && !nodoInf.formaCiclo()){
+                        result.add(new Nodo(n_x, n_y + 1, n, n.getCoste(), h(n_x, n_y + 1)));
+                    }
+                    break;
+                case 2: //Derecha
+                    Nodo nodoDer = new Nodo(n_x, n_y, n.getPadre());
+                    if (problema.enLaberinto(n_x + 1, n_y) && !this.problema.hayObstaculos(n_x + 1, n_y) && !nodoDer.formaCiclo()){
+                        result.add(new Nodo(n_x + 1, n_y, n, n.getCoste(), h(n_x + 1, n_y)));
+                    }
+                    break;
+                case 3: //Izquierda
+                    Nodo nodoIzq = new Nodo(n_x, n_y, n.getPadre());
+                    if (problema.enLaberinto(n_x - 1, n_y) && !this.problema.hayObstaculos(n_x - 1, n_y) && !nodoIzq.formaCiclo()){
+                        result.add(new Nodo(n_x - 1, n_y, n, n.getCoste(), h(n_x - 1, n_y)));
+                    }
+                break;
+            }
+        }
+        return result;
     }
 }

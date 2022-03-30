@@ -110,6 +110,10 @@ public class Laberinto {
 
     }
 
+    public boolean hayObstaculos(int x, int y) {
+        return (matriz[x][y] == OBSTACULO);
+    }
+
     public void actualizarObstaculo(int newProb) {
         prob = newProb;
         this.generarLaberinto();
@@ -154,6 +158,10 @@ public class Laberinto {
         }
 
         return res.toString();
+    }
+
+    public boolean enLaberinto(int suc_x, int i) {
+        return false;
     }
 
 }

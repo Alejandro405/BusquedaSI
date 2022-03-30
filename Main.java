@@ -8,6 +8,9 @@ public class Main {
         prueba.generarLaberinto();
         prueba.mostrarLaberinto();
 
+        Nodo a = new Nodo (0,0,null, 0, 50);
+        Nodo b = new Nodo (0,0,null, 4, 50);
+        System.out.println(a.equals(b));
         System.out.println("-------------------------------------");
         Astar h0 = new Astar(prueba, 2);
         //Astar distManh = new Astar(prueba, 2);
