@@ -44,7 +44,7 @@ public class Nodo implements Comparable<Nodo>{
     public boolean formaCiclo(){
         boolean nodoEncontrado = false;
         Nodo next = padre;
-        while (!nodoEncontrado && next.padre != null){
+        while (!nodoEncontrado && next != null){
             if (this.equals(next)) {
                 nodoEncontrado = true;
             } else {
@@ -76,7 +76,7 @@ public class Nodo implements Comparable<Nodo>{
 
     @Override
     public String toString () {
-        return "x: " + corX + " /y: " + corY + "P: " + padre;
+        return "(" + corX + ", " + corY + ")";
         //+ " /Coste: " + coste + " /Estimacion: " + estimacion;
     }
 }

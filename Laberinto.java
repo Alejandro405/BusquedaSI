@@ -15,7 +15,10 @@ public class Laberinto {
     private int iniX, iniY, finX, finY;
     private long seed;
 
+    ArrayList<Nodo> solucion;
+
     public Laberinto(int x, int y) {
+        solucion = new ArrayList<Nodo>();
         this.dimensionX = x;
         this.dimensionY = y;
         matriz = new char[dimensionX][dimensionY];
@@ -128,8 +131,7 @@ public class Laberinto {
     }
 
     public void pintarSolucion(ArrayList<Nodo> solucion) {
-
-        for (int i = 0; i < solucion.size(); i++) {
+        /**for (int i = 0; i < solucion.size(); i++) {
 
             Nodo n = solucion.get(i);
             matriz[n.getX()][n.getY()] = VISITADO;
@@ -137,7 +139,14 @@ public class Laberinto {
         }
 
         System.out.println("-------------------------------------");
-        mostrarLaberinto();
+        mostrarLaberinto();*/
+        StringJoiner res = new StringJoiner("->", "[", "]");
+        for (Nodo n : solucion) {
+            res.add(n.toString());
+        }
+
+
+        System.out.println(res.toString());
 
     }
 
@@ -160,8 +169,17 @@ public class Laberinto {
         return res.toString();
     }
 
-    public boolean enLaberinto(int suc_x, int i) {
-        return false;
+    public boolean enLaberinto(int x, int y) {
+        boolean result = false;
+        if ((x < dimensionX) && (x > -1))
+            if (y < dimensionY && y > -1)
+                result = true;
+        
+        return result;
+    }
+
+    public void setSolucion(ArrayList<Nodo> sol) {
+        solucion = sol;
     }
 
 }

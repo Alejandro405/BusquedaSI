@@ -38,23 +38,27 @@ public class Astar{
         Abiertos.add(new Nodo(this.problema.getInicX(), problema.getInicY(), null, 0, 0));
 
         while (!Abiertos.isEmpty() && !encontradaSolucion){
-
             Nodo n = Abiertos.pollFirst();
            // Abiertos.remove(n);
             Cerrados.add(n);
-            problema.marcarCerrado(n.getX(), n.getY());
-
-            if (!problema.esObjetivo(n)) {
-                sucesores(n);
+            /**problema.marcarCerrado(n.getX(), n.getY());*/
+            
+            if (!problema.esObjetivo(n)) {//sucesores(n);
+                for (Nodo x : calcSucesores(n)){
+                    if (!Abiertos.contains(x) && !Cerrados.contains(x)) {
+                        Abiertos.add(x);
+                    }
+                }
             } else {
                 encontradaSolucion = true;
                 sol = reconstruirSolucion(n);
-                System.out.println(n);
+                //System.out.println(n);
             }
-            System.out.println("-------------------------------------");
-            problema.mostrarLaberinto();
+            /**System.out.println("-------------------------------------");
+            problema.mostrarLaberinto();*/
         }
-
+        
+        problema.setSolucion(sol);
         return sol;
     }
 
@@ -69,11 +73,6 @@ public class Astar{
         }
 
         return sol;
-    }
-
-    private boolean formaCiclos(Nodo n) {
-
-        return false ;
     }
 
     private void sucesores (Nodo actual) {
@@ -136,31 +135,35 @@ public class Astar{
             int n_x = n.getX();
             switch(i){
                 case 0: //Arriba
-                    Nodo nodoSup = new Nodo(n_x, n_y, n.getPadre());
+                    Nodo nodoSup = new Nodo(n_x, n_y - 1, n.getPadre());
                     if (problema.enLaberinto(n_x, n_y - 1) && !this.problema.hayObstaculos(n_x, n_y - 1) && !nodoSup.formaCiclo()){
-                        result.add(new Nodo(n_x, n_y - 1, n, n.getCoste(), h(n_x, n_y - 1)));
+                        result.add(new Nodo(n_x, n_y - 1, n, n.getCoste() + 1, h(n_x, n_y - 1)));
                     }
                     break;
                 case 1: //Abajo 
-                    Nodo nodoInf = new Nodo(n_x, n_y, n.getPadre());
+                    Nodo nodoInf = new Nodo(n_x, n_y + 1, n.getPadre());
                     if (problema.enLaberinto(n_x, n_y + 1) && !this.problema.hayObstaculos(n_x, n_y + 1) && !nodoInf.formaCiclo()){
-                        result.add(new Nodo(n_x, n_y + 1, n, n.getCoste(), h(n_x, n_y + 1)));
+                        result.add(new Nodo(n_x, n_y + 1, n, n.getCoste() + 1, h(n_x, n_y + 1)));
                     }
                     break;
                 case 2: //Derecha
-                    Nodo nodoDer = new Nodo(n_x, n_y, n.getPadre());
+                    Nodo nodoDer = new Nodo(n_x + 1, n_y, n.getPadre());
                     if (problema.enLaberinto(n_x + 1, n_y) && !this.problema.hayObstaculos(n_x + 1, n_y) && !nodoDer.formaCiclo()){
-                        result.add(new Nodo(n_x + 1, n_y, n, n.getCoste(), h(n_x + 1, n_y)));
+                        result.add(new Nodo(n_x + 1, n_y, n, n.getCoste() + 1, h(n_x + 1, n_y)));
                     }
                     break;
                 case 3: //Izquierda
-                    Nodo nodoIzq = new Nodo(n_x, n_y, n.getPadre());
+                    Nodo nodoIzq = new Nodo(n_x - 1, n_y, n.getPadre());
                     if (problema.enLaberinto(n_x - 1, n_y) && !this.problema.hayObstaculos(n_x - 1, n_y) && !nodoIzq.formaCiclo()){
-                        result.add(new Nodo(n_x - 1, n_y, n, n.getCoste(), h(n_x - 1, n_y)));
+                        result.add(new Nodo(n_x - 1, n_y, n, n.getCoste() + 1, h(n_x - 1, n_y)));
                     }
                 break;
             }
         }
         return result;
+    }
+
+    public void mostrarSolucion(ArrayList<Nodo> solucion){
+        problema.pintarSolucion(solucion);
     }
 }
