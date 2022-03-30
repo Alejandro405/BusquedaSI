@@ -17,7 +17,7 @@ public class Nodo implements Comparable<Nodo>{
         corX = X;
         corY = Y;
         coste = g;
-        estimacion = h;
+        estimacion = g + h;
         padre = p;
     }
 

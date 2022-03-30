@@ -136,25 +136,25 @@ public class Astar{
             switch(i){
                 case 0: //Arriba
                     Nodo nodoSup = new Nodo(n_x, n_y - 1, n.getPadre());
-                    if (problema.enLaberinto(n_x, n_y - 1) && !this.problema.hayObstaculos(n_x, n_y - 1) && !nodoSup.formaCiclo()){
+                    if (problema.enLaberinto(n_x, n_y - 1) && !this.problema.hayObstaculos(n_x, n_y - 1) /**&& !nodoSup.formaCiclo()*/){
                         result.add(new Nodo(n_x, n_y - 1, n, n.getCoste() + 1, h(n_x, n_y - 1)));
                     }
                     break;
                 case 1: //Abajo 
                     Nodo nodoInf = new Nodo(n_x, n_y + 1, n.getPadre());
-                    if (problema.enLaberinto(n_x, n_y + 1) && !this.problema.hayObstaculos(n_x, n_y + 1) && !nodoInf.formaCiclo()){
+                    if (problema.enLaberinto(n_x, n_y + 1) && !this.problema.hayObstaculos(n_x, n_y + 1) /**&& !nodoInf.formaCiclo()*/){
                         result.add(new Nodo(n_x, n_y + 1, n, n.getCoste() + 1, h(n_x, n_y + 1)));
                     }
                     break;
                 case 2: //Derecha
                     Nodo nodoDer = new Nodo(n_x + 1, n_y, n.getPadre());
-                    if (problema.enLaberinto(n_x + 1, n_y) && !this.problema.hayObstaculos(n_x + 1, n_y) && !nodoDer.formaCiclo()){
+                    if (problema.enLaberinto(n_x + 1, n_y) && !this.problema.hayObstaculos(n_x + 1, n_y) /**&& !nodoDer.formaCiclo()*/){
                         result.add(new Nodo(n_x + 1, n_y, n, n.getCoste() + 1, h(n_x + 1, n_y)));
                     }
                     break;
                 case 3: //Izquierda
                     Nodo nodoIzq = new Nodo(n_x - 1, n_y, n.getPadre());
-                    if (problema.enLaberinto(n_x - 1, n_y) && !this.problema.hayObstaculos(n_x - 1, n_y) && !nodoIzq.formaCiclo()){
+                    if (problema.enLaberinto(n_x - 1, n_y) && !this.problema.hayObstaculos(n_x - 1, n_y) /**&& !nodoIzq.formaCiclo()*/){
                         result.add(new Nodo(n_x - 1, n_y, n, n.getCoste() + 1, h(n_x - 1, n_y)));
                     }
                 break;
