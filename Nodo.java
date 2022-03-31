@@ -1,23 +1,15 @@
 public class Nodo implements Comparable<Nodo>{
-
     private int corX;
     private int corY;
     private int coste;
-    private double estimacion;
-
     private Nodo padre;
-
-    public Nodo(int x, int y, Nodo p){
-        corX = x;
-        corY = y;
-        padre = p;
-    }
+    private double estimacion;
 
     public Nodo (int X, int Y, Nodo p, int g, double h){
         corX = X;
         corY = Y;
         coste = g;
-        estimacion = g + h;
+        estimacion = h;
         padre = p;
     }
 
@@ -41,19 +33,6 @@ public class Nodo implements Comparable<Nodo>{
         return estimacion;
     }
 
-    public boolean formaCiclo(){
-        boolean nodoEncontrado = false;
-        Nodo next = padre;
-        while (!nodoEncontrado && next != null){
-            if (this.equals(next)) {
-                nodoEncontrado = true;
-            } else {
-                next = next.padre;
-            }
-        }
-        return nodoEncontrado;
-    }
-    
     @Override
     public boolean equals(Object o){
         boolean res = false;
@@ -63,11 +42,17 @@ public class Nodo implements Comparable<Nodo>{
         
         return res;  
     }
-    
-	@Override
-	public int compareTo(Nodo o) {
+
+    @Override
+	public int compareTo (Nodo o) {
         if (o.getX() != corX || o.getY() != corY) {
-            return (int)((coste + estimacion) - (o.getCoste() + o.getEstimacion()));
+            if ((coste + estimacion) < (o.getCoste() + o.getEstimacion())) {
+                return -1;
+            }else if ((coste + estimacion) > (o.getCoste() + o.getEstimacion())){
+                return 1;
+            }else{
+                return 0;
+            }
         }else{
             return 0;
         }

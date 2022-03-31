@@ -1,23 +1,16 @@
 import java.util.ArrayList;
 
 public class Main {
-    public static void main (String [ ] args) {
-        
-        Laberinto prueba = new Laberinto (5,5);
-        Astar h0 = new Astar(prueba, 2);
+    public static void main(String[] args) {
 
-        //h0.mostrarSolucion(h0.resolver());
-
-        
+        Laberinto prueba = new Laberinto(60, 80);
         prueba.generarLaberinto();
+        Astar h0 = new Astar(prueba, 1);
+
         prueba.mostrarLaberinto();
-        //Nodo a = new Nodo (0,0,null, 0, 50);
-       // Nodo b = new Nodo (0,0,null, 4, 50);
-        //System.out.println(a.equals(b));
         System.out.println("-------------------------------------");
-        
-        //Astar distManh = new Astar(prueba, 2);
-        //Astar distEu = new Astar(prueba, 3);
+        // Astar distManh = new Astar(prueba, 2);
+        // Astar distEu = new Astar(prueba, 3);
         ArrayList<Nodo> trampa = new ArrayList<>();
         trampa.add(new Nodo(2, 3, null, 0, 0));
         trampa.add(new Nodo(1, 3, null, 0, 0));
@@ -26,4 +19,5 @@ public class Main {
         prueba.pintarSolucion(h0.resolver());
 
     }
-} 
+
+}

@@ -1,4 +1,7 @@
 import java.util.*;
+import java.io.File;
+import java.io.PrintWriter;
+import java.lang.*;
 
 public class Laberinto {
     private static final char SALIDA = 'I';
@@ -14,11 +17,8 @@ public class Laberinto {
     private int prob = 30;
     private int iniX, iniY, finX, finY;
     private long seed;
-
-    ArrayList<Nodo> solucion;
-
+    
     public Laberinto(int x, int y) {
-        solucion = new ArrayList<Nodo>();
         this.dimensionX = x;
         this.dimensionY = y;
         matriz = new char[dimensionX][dimensionY];
@@ -85,14 +85,14 @@ public class Laberinto {
             do {
                 obsX = pos.nextInt(dimensionX - 1);
                 obsY = pos.nextInt(dimensionY - 1);
-            } while (!estaLibre(obsX, obsY));
+            } while (!puedoObs(obsX, obsY));
 
             matriz[obsX][obsY] = OBSTACULO;
         }
     }
 
     public void marcarAbierto(int x, int y) {
-        if(estaLibre(x, y)) {
+        if(estaLibre(x, y) && matriz[x][y] != FIN) {
             matriz[x][y] = ABIERTO;
         }
     }
@@ -113,12 +113,29 @@ public class Laberinto {
 
     }
 
+    public boolean puedoObs(int x, int y) {
+
+        if (matriz[x][y] == LIBRE) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
     public boolean hayObstaculos(int x, int y) {
         return (matriz[x][y] == OBSTACULO);
     }
 
     public void actualizarObstaculo(int newProb) {
         prob = newProb;
+        for (int i = 0; i < dimensionX; i++) {
+
+            for (int j = 0; j < dimensionY; j++) {
+                matriz[i][j] = LIBRE;
+            }
+
+        }
         this.generarLaberinto();
     }
 
@@ -131,23 +148,26 @@ public class Laberinto {
     }
 
     public void pintarSolucion(ArrayList<Nodo> solucion) {
-        /**for (int i = 0; i < solucion.size(); i++) {
+        for (int i = 0; i < solucion.size(); i++) {
 
             Nodo n = solucion.get(i);
-            matriz[n.getX()][n.getY()] = VISITADO;
-            
+            if ( matriz[n.getX()][n.getY()] != SALIDA && matriz[n.getX()][n.getY()] != FIN){
+                matriz[n.getX()][n.getY()] = VISITADO;
+            }
         }
 
-        System.out.println("-------------------------------------");
-        mostrarLaberinto();*/
-        StringJoiner res = new StringJoiner("->", "[", "]");
-        for (Nodo n : solucion) {
-            res.add(n.toString());
+        //System.out.println("-------------------------------------");
+        try (PrintWriter out = new PrintWriter(new File("ejec.txt"))) {
+            out.println(this.toString());
+            out.print("Coste de la solucion: "+solucion.size());
+        } catch (Exception e) {
+            //TODO: handle exception
         }
+        System.out.println("Coste de la solucion: "+solucion.size());
+        mostrarLaberinto();
+    }
 
-
-        System.out.println(res.toString());
-
+    private void mostrarLaberinto(PrintWriter out) {
     }
 
     @Override
@@ -159,7 +179,7 @@ public class Laberinto {
             String linea = "";
 
             for (int j = 0; j < dimensionY; j++) {
-                linea += "[" + matriz[j][i] + "]"; // Analiza por columnas, permutamos los indices
+                linea += "[" + matriz[i][j] + "]"; // Analiza por columnas, permutamos los indices
             }
 
             res.add(linea);
@@ -167,19 +187,6 @@ public class Laberinto {
         }
 
         return res.toString();
-    }
-
-    public boolean enLaberinto(int x, int y) {
-        boolean result = false;
-        if ((x < dimensionX) && (x > -1))
-            if (y < dimensionY && y > -1)
-                result = true;
-        
-        return result;
-    }
-
-    public void setSolucion(ArrayList<Nodo> sol) {
-        solucion = sol;
     }
 
 }
